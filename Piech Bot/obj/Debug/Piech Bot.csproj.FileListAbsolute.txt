@@ -1,0 +1,32 @@
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Piech Bot.exe.config
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Piech Bot.exe
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Piech Bot.pdb
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.Commands.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.Core.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.Rest.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.Webhook.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.WebSocket.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Newtonsoft.Json.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Collections.Immutable.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Interactive.Async.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Linq.Async.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.Commands.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.Core.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.Rest.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.Webhook.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Discord.Net.WebSocket.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\Newtonsoft.Json.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Collections.Immutable.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Interactive.Async.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Linq.Async.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\David\source\repos\Piech Bot\Piech Bot\obj\Debug\Piech Bot.csprojAssemblyReference.cache
+C:\Users\David\source\repos\Piech Bot\Piech Bot\obj\Debug\Piech Bot.csproj.CoreCompileInputs.cache
+C:\Users\David\source\repos\Piech Bot\Piech Bot\obj\Debug\Piech Bot.csproj.CopyComplete
+C:\Users\David\source\repos\Piech Bot\Piech Bot\obj\Debug\Piech Bot.exe
+C:\Users\David\source\repos\Piech Bot\Piech Bot\obj\Debug\Piech Bot.pdb
