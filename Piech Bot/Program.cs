@@ -22,6 +22,8 @@ namespace Piech_Bot
 
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
+            Console.WriteLine("Setting Activity");
+            await _client.SetGameAsync("PiechPOG", null, ActivityType.Watching);
 
             // Block this task until the program is closed.
             await Task.Delay(-1);
@@ -55,49 +57,60 @@ namespace Piech_Bot
                 {
                     return Task.CompletedTask;
                 }
-                else if (caseinsensitive.Contains("pích"))
+                else if (caseinsensitive.Contains("pích") && message.Author.Id != 788873188472913951)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
                     Console.Write(" ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(message.Channel + " ");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(message.Author);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write(" >> ");
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine(" >> " + message.Content);
+                    Console.WriteLine(message.Content);
                     Console.ForegroundColor = ConsoleColor.White;
-                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Myslel jsi Piech?");
-                }
-                else if (caseinsensitive.Contains("helo piech") || caseinsensitive.Contains("hello piech"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
-                    Console.Write(" ");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write(message.Author);
-                    Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine(" >> " + message.Content);
-                    Console.ForegroundColor = ConsoleColor.White;
-                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " no");
-                }
 
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Myslel jsi " + caseinsensitive.Replace("pích", "piech") + "?");
+                }
+                else if (caseinsensitive.Contains("helo piech") || caseinsensitive.Contains("hello piech") && message.Author.Id != 788873188472913951)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                    Console.Write(" ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(message.Channel + " ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(message.Author);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write(" >> ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine(message.Content);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Hello There!");
+                }
                 //  CLASSIFIED COMMAND
-
-                else if (caseinsensitive.Contains("69"))
+                else if (caseinsensitive.Contains("69") && message.Author.Id != 788873188472913951)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
                     Console.Write(" ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(message.Channel + " ");
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write(message.Author);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write(" >> ");
                     Console.ForegroundColor = ConsoleColor.Blue;
-                    Console.WriteLine(" >> " + message.Content);
+                    Console.WriteLine(message.Content);
                     Console.ForegroundColor = ConsoleColor.White;
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " nice");
                 }
-                else
-                {
-                    return Task.CompletedTask;
-                }
+            else
+            {
+                return Task.CompletedTask;
+            }
             }
 
             if (message.Author.IsBot) //This ignores all commands from bots
@@ -115,14 +128,16 @@ namespace Piech_Bot
                           COMMANDS
                                                 
                                                     */
-            if (command.Equals("randompiech"))
+            if (command.Equals("randompiech") && message.Author.Id != 788873188472913951)
             {
                 Random rndImage = new Random();
-                int random_Piech = rndImage.Next(1, 10);
+                int random_Piech = rndImage.Next(1, 12);
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
                 Console.Write(" ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(message.Channel + " ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(message.Author);
                 Console.ForegroundColor = ConsoleColor.Gray;
@@ -169,9 +184,17 @@ namespace Piech_Bot
                 {
                     message.Channel.SendFileAsync("PiechImage/piechwtfsign.jpg");
                 }
+                else if (random_Piech == 10)
+                {
+                    message.Channel.SendFileAsync("PiechImage/piechathomedone.jpg");
+                }
+                else if (random_Piech == 11)
+                {
+                    message.Channel.SendFileAsync("PiechImage/Cyberpiechwallpaper.jpg");
+                }
 
             } //                  ßrandompiech COMMAND
-            else if (command.Equals("randompiechvideo"))
+            else if (command.Equals("randompiechvideo") && message.Author.Id != 788873188472913951)
             {
                 Random rndVideo = new Random();
                 int randomPiechVideo = rndVideo.Next(1, 23);
@@ -179,6 +202,8 @@ namespace Piech_Bot
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
                 Console.Write(" ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(message.Channel + " ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(message.Author);
                 Console.ForegroundColor = ConsoleColor.Gray;
@@ -279,11 +304,13 @@ namespace Piech_Bot
                 }
 
             } //        ßrandompiechvideo COMMAND
-            else if (command.Equals("vizitka"))
+            else if (command.Equals("vizitka") && message.Author.Id != 788873188472913951)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
                 Console.Write(" ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(message.Channel + " ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(message.Author);
                 Console.ForegroundColor = ConsoleColor.Gray;
@@ -311,18 +338,40 @@ namespace Piech_Bot
                 .Build();
                 message.Channel.SendMessageAsync("", false, embed);
             } //                 ßvizitka COMMAND
-            else if (command.Equals("stop"))
+            else if (command.Equals("stop") && message.Author.Id != 788873188472913951)
             {
                 if (message.Author.Id == 385845659674345484)
                 {
+                    message.DeleteAsync();
                     System.Environment.Exit(1);
                 }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                    Console.Write(" ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(message.Channel + " ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(message.Author);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write(" >> ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("ßstop");
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Console.WriteLine(" Nemá na tohle práva");
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Nemáš na tohle práva");
+                }
             } //                    ßstop COMMAND
-            else if (command.Equals("help"))
+            else if (command.Equals("help") && message.Author.Id != 788873188472913951)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
                 Console.Write(" ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(message.Channel + " ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(message.Author);
                 Console.ForegroundColor = ConsoleColor.Gray;
