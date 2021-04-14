@@ -33,17 +33,29 @@ namespace Piech_Bot
 
         private async Task OnReady()
         {
-            Random rndPiechReady = new Random();
-            int randomPiechReady = rndPiechReady.Next(1, 1001);
-            if (randomPiechReady >= 0 && randomPiechReady <= 1000)
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("Start silent? 1/0: ");
+            int isSilent = Convert.ToInt32(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.White;
+            if (isSilent == 1)
             {
-                var PiechChannel = _client.GetChannel(831054488193335326) as IMessageChannel;
-                await PiechChannel.SendMessageAsync("@everyone Piech is here");
+
             }
             else
             {
-                var PiechChannel = _client.GetChannel(831054488193335326) as IMessageChannel;
-                await PiechChannel.SendMessageAsync("I love it when you press F5 in Visual Studio 'cause it turns me on ;)");
+                Random rndPiechReady = new Random();
+                int randomPiechReady = rndPiechReady.Next(1, 1001);
+                if (randomPiechReady >= 0 && randomPiechReady <= 1000)
+                {
+
+                    var PiechChannel = _client.GetChannel(829977064890171392) as IMessageChannel;
+                    await PiechChannel.SendMessageAsync("@everyone Piech is here");
+                }
+                else
+                {
+                    var PiechChannel = _client.GetChannel(829977064890171392) as IMessageChannel;
+                    // CLASIFIED
+                }
             }
         }
 
@@ -75,7 +87,7 @@ namespace Piech_Bot
                 {
                     return Task.CompletedTask;
                 }
-                else if (caseinsensitive.Contains("pích") && message.Author.Id != 788873188472913951)
+                else if (caseinsensitive.Contains("pích"))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -92,7 +104,7 @@ namespace Piech_Bot
 
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Myslel jsi " + caseinsensitive.Replace("pích", "piech") + "?");
                 }
-                else if (caseinsensitive.Contains("helo piech") || caseinsensitive.Contains("hello piech") && message.Author.Id != 788873188472913951)
+                else if (caseinsensitive.Contains("helo piech") || caseinsensitive.Contains("hello piech"))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -108,8 +120,8 @@ namespace Piech_Bot
                     Console.ForegroundColor = ConsoleColor.White;
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Hello There!");
                 }
-                //  CLASSIFIED COMMAND
-                else if (caseinsensitive.Contains("69") && message.Author.Id != 788873188472913951)
+                // CLASSIFIED
+                else if (caseinsensitive.Contains("69"))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -124,6 +136,23 @@ namespace Piech_Bot
                     Console.WriteLine(message.Content);
                     Console.ForegroundColor = ConsoleColor.White;
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " nice");
+                }
+                else if (caseinsensitive.Contains("cybertech"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                    Console.Write(" ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(message.Channel + " ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(message.Author);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write(" >> ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine(message.Content);
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Myslel jsi " + caseinsensitive.Replace("cybertech", "cyberpiech") + "?");
                 }
                 else
                 {
@@ -146,7 +175,7 @@ namespace Piech_Bot
                           COMMANDS
                                                 
                                                     */
-            if (command.Equals("randompiech") && message.Author.Id != 788873188472913951)
+            if (command.Equals("randompiech"))
             {
                 Random rndImage = new Random();
                 int random_Piech = rndImage.Next(1, 12);
@@ -212,7 +241,7 @@ namespace Piech_Bot
                 }
 
             } //                  ßrandompiech COMMAND
-            else if (command.Equals("randompiechvideo") && message.Author.Id != 788873188472913951)
+            else if (command.Equals("randompiechvideo"))
             {
                 Random rndVideo = new Random();
                 int randomPiechVideo = rndVideo.Next(1, 23);
@@ -302,11 +331,11 @@ namespace Piech_Bot
                 }
                 else if (randomPiechVideo == 18)
                 {
-                    message.Channel.SendFileAsync("PiechVideo/PiechVideo17.mp4", "Enjoy your Piech video!");
+                    message.Channel.SendFileAsync("PiechVideo/PiechVideo17.mp4", "It's raining Piech!");
                 }
                 else if (randomPiechVideo == 19)
                 {
-                    message.Channel.SendFileAsync("PiechVideo/PiechVideo18.mp4", "Enjoy your Piech video!");
+                    message.Channel.SendFileAsync("PiechVideo/PiechVideo18.mp4", "Piech gon give it to you!");
                 }
                 else if (randomPiechVideo == 20)
                 {
@@ -322,7 +351,7 @@ namespace Piech_Bot
                 }
 
             } //        ßrandompiechvideo COMMAND
-            else if (command.Equals("vizitka") && message.Author.Id != 788873188472913951)
+            else if (command.Equals("vizitka"))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -356,7 +385,7 @@ namespace Piech_Bot
                 .Build();
                 message.Channel.SendMessageAsync("", false, embed);
             } //                 ßvizitka COMMAND
-            else if (command.Equals("stop") && message.Author.Id != 788873188472913951)
+            else if (command.Equals("stop"))
             {
                 if (message.Author.Id == 385845659674345484)
                 {
@@ -384,7 +413,7 @@ namespace Piech_Bot
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Nemáš na tohle práva");
                 }
             } //                    ßstop COMMAND
-            else if (command.Equals("help") && message.Author.Id != 788873188472913951)
+            else if (command.Equals("help"))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -419,11 +448,11 @@ namespace Piech_Bot
                 message.Channel.SendMessageAsync("", false, embed);
 
             } //                    ßhelp COMMAND
-            //  CLASSIFIED COMMAND
-            else if (command.Equals("randomucitel") && message.Author.Id != 788873188472913951)
+            // CLASSIFIED
+            else if (command.Equals("randomucitel"))
             {
                 Random rndKonicek = new Random();
-                int random_konicek = rndKonicek.Next(1, 61);
+                int random_konicek = rndKonicek.Next(1, 66);
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -679,6 +708,26 @@ namespace Piech_Bot
                 else if (random_konicek == 60)
                 {
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " měl jsem trochu máslo na hlavě\n-koníček 2021");
+                }
+                else if (random_konicek == 61)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " TAKŽE DOBRÝ DEN DĚCKA\n-Martina Hulvová");
+                }
+                else if (random_konicek == 62)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Počítač nemá nožičky\n-Vengřínová 2020");
+                }
+                else if (random_konicek == 63)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Suckling because you suck\n-Jedlička");
+                }
+                else if (random_konicek == 64)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Hulvová: To je Erik? \nErik: ano To jsem já\nHulvová: Kdo já?");
+                }
+                else if (random_konicek == 65)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " my jsme si domluvili rande za kostelem a dali jsme si tam do nosu\n-koníček 2021");
                 }
 
             } //            ßrandomucitel Command
