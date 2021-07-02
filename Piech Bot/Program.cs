@@ -2,13 +2,18 @@
 using Discord.WebSocket;
 using System;
 using System.IO;
+using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Piech_Bot
 {
     class Program
     {
-        public static void Main(string[] args)  => new Program().MainAsync().GetAwaiter().GetResult();
+        int currentNumber = Convert.ToInt32(System.IO.File.ReadLines("count.txt").First());
+        int countRecord = Convert.ToInt32(System.IO.File.ReadLines("count.txt").Skip(1).First());
+        ulong msgAuthorOld = Convert.ToUInt64(System.IO.File.ReadLines("count.txt").Last());
+        public static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
 
         private DiscordSocketClient _client;
 
@@ -31,32 +36,12 @@ namespace Piech_Bot
             await Task.Delay(-1);
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         private async Task OnReady()
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write("Start silent? 1/0: ");
-            int isSilent = Convert.ToInt32(Console.ReadLine());
-            Console.ForegroundColor = ConsoleColor.White;
-            if (isSilent == 1)
-            {
-
-            }
-            else
-            {
-                Random rndPiechReady = new Random();
-                int randomPiechReady = rndPiechReady.Next(1, 1001);
-                if (randomPiechReady >= 0 && randomPiechReady <= 1000)
-                {
-
-                    var PiechChannel = _client.GetChannel(829977064890171392) as IMessageChannel;
-                    await PiechChannel.SendMessageAsync("@everyone Piech is here");
-                }
-                else
-                {
-                    var PiechChannel = _client.GetChannel(829977064890171392) as IMessageChannel;
-                    // CLASIFIED
-                }
-            }
+            Console.WriteLine("Current Number: " + currentNumber);
+            Console.WriteLine("Count Record: " + countRecord);
         }
 
         private Task Log(LogMessage msg)
@@ -82,12 +67,19 @@ namespace Piech_Bot
             {
                 lengthOfMessage = message.Content.Length;
                 caseinsensitive = message.Content.Substring(0, lengthOfMessage).ToLower();
+                var CountingChannel = _client.GetChannel(858380613776834610) as IMessageChannel;
+
 
                 if (message.Author.IsBot)
                 {
+                    /*if (message.Content.Equals("COUNTSTART"))
+                    {
+                       currentNumber = 1;
+                    }*/
+
                     return Task.CompletedTask;
                 }
-                else if (caseinsensitive.Contains("pích"))
+                else if (caseinsensitive.Contains("pích") && !message.Channel.Equals(CountingChannel))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -104,7 +96,7 @@ namespace Piech_Bot
 
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Myslel jsi " + caseinsensitive.Replace("pích", "piech") + "?");
                 }
-                else if (caseinsensitive.Contains("helo piech") || caseinsensitive.Contains("hello piech"))
+                else if (caseinsensitive.Contains("helo piech") && !message.Channel.Equals(CountingChannel) || caseinsensitive.Contains("hello piech"))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -120,8 +112,25 @@ namespace Piech_Bot
                     Console.ForegroundColor = ConsoleColor.White;
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Hello There!");
                 }
-                // CLASSIFIED
-                else if (caseinsensitive.Contains("69"))
+                else if (caseinsensitive.Contains("betterthangodo") && !message.Channel.Equals(CountingChannel) || caseinsensitive.Contains("better than godo"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                    Console.Write(" ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(message.Channel + " ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write(message.Author);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write(" >> ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine(message.Content);
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    message.DeleteAsync();
+                    message.Author.SendFileAsync("PiechImage/thiccPiech.png", "agree");
+                }
+                else if (caseinsensitive.Contains("69") && !message.Channel.Equals(CountingChannel))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -137,7 +146,7 @@ namespace Piech_Bot
                     Console.ForegroundColor = ConsoleColor.White;
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " nice");
                 }
-                else if (caseinsensitive.Contains("cybertech"))
+                else if (caseinsensitive.Contains("cybertech") && !message.Channel.Equals(CountingChannel))
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -154,6 +163,66 @@ namespace Piech_Bot
 
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Myslel jsi " + caseinsensitive.Replace("cybertech", "cyberpiech") + "?");
                 }
+                else if (message.Channel.Equals(CountingChannel) && message.Attachments.Count.Equals(1))
+                {
+                    // handles attachments in #counting
+                }
+                else if (message.Channel.Equals(CountingChannel) && caseinsensitive.Equals(currentNumber.ToString()) && !message.Author.Id.Equals(msgAuthorOld) && message.Attachments.Count.Equals(0))
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                    Console.Write(" ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(message.Channel + " ");
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    Console.Write(message.Author);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write(" >> ");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(message.Content);
+                    Console.ForegroundColor = ConsoleColor.White;
+
+                    var emojiok = new Emoji("\uD83D\uDC4C");
+                    message.AddReactionAsync(emojiok);
+                    msgAuthorOld = message.Author.Id;
+                    currentNumber += 1;
+
+                }
+                else if (message.Channel.Equals(CountingChannel) && !caseinsensitive.Equals(currentNumber.ToString()) || message.Author.Id.Equals(msgAuthorOld) && message.Attachments.Count.Equals(0))
+                {
+                    if (caseinsensitive.Contains("a") || caseinsensitive.Contains("b") || caseinsensitive.Contains("c") || caseinsensitive.Contains("d") || caseinsensitive.Contains("e") || caseinsensitive.Contains("f") || caseinsensitive.Contains("g") || caseinsensitive.Contains("h") || caseinsensitive.Contains("i") || caseinsensitive.Contains("j") || caseinsensitive.Contains("k") || caseinsensitive.Contains("l") || caseinsensitive.Contains("m") || caseinsensitive.Contains("n") || caseinsensitive.Contains("o") || caseinsensitive.Contains("p") || caseinsensitive.Contains("s") || caseinsensitive.Contains("t") || caseinsensitive.Contains("u") || caseinsensitive.Contains("v") || caseinsensitive.Contains("w") || caseinsensitive.Contains("x") || caseinsensitive.Contains("y") || caseinsensitive.Contains("z") || caseinsensitive.Contains("á") || caseinsensitive.Contains("ý") || caseinsensitive.Contains("í") || caseinsensitive.Contains("ú") || caseinsensitive.Contains("é") || caseinsensitive.Contains("ó") || caseinsensitive.Contains("č") || caseinsensitive.Contains("ž") || caseinsensitive.Contains("ť") || caseinsensitive.Contains("ě") || caseinsensitive.Contains("š") || caseinsensitive.Contains("ř") || caseinsensitive.Contains("´") || caseinsensitive.Contains("=") || caseinsensitive.Contains(")") || caseinsensitive.Contains("(") || caseinsensitive.Contains("}") || caseinsensitive.Contains("{") || caseinsensitive.Contains("§") || caseinsensitive.Contains("¨") || caseinsensitive.Contains("-") || caseinsensitive.Contains(".") || caseinsensitive.Contains("+") || caseinsensitive.Contains("*") || caseinsensitive.Contains(",") || caseinsensitive.Contains(";") || caseinsensitive.Contains("ß") || caseinsensitive.Contains("<") || caseinsensitive.Contains(">") || caseinsensitive.Contains("¤") || caseinsensitive.Contains("$") || caseinsensitive.Contains("×") || caseinsensitive.Contains("÷") || caseinsensitive.Contains("¸") || caseinsensitive.Contains("@") || caseinsensitive.Contains("¥") || caseinsensitive.Contains("€") || caseinsensitive.Contains("¢") || caseinsensitive.Contains("£") || caseinsensitive.Contains("¶") || caseinsensitive.Contains("∆"))
+                    {
+                        // handles messages in #counting
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                        Console.Write(" ");
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(message.Channel + " ");
+                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        Console.Write(message.Author);
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                        Console.Write(" >> ");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(message.Content);
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine(" COUNT RESET");
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        var emojinotok = new Emoji("\u274C");
+                        message.AddReactionAsync(emojinotok);
+                        CountingChannel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " is dum");
+                        if (currentNumber > countRecord)
+                        {
+                            countRecord = currentNumber;
+                            CountingChannel.SendMessageAsync("New Record! " + countRecord);
+                        }
+                        msgAuthorOld = 0;
+                        currentNumber = 1;
+                    }
+                }
                 else
                 {
                     return Task.CompletedTask;
@@ -168,7 +237,14 @@ namespace Piech_Bot
             else
                 lengthOfCommand = message.Content.Length;
 
-            command = message.Content.Substring(1, lengthOfCommand - 1).ToLower();
+            if (message.Attachments.Count.Equals(1))
+            {
+
+            }
+            else
+            {
+                command = message.Content.Substring(1, lengthOfCommand - 1).ToLower();
+            }
 
             /*
              
@@ -390,6 +466,19 @@ namespace Piech_Bot
                 if (message.Author.Id == 385845659674345484)
                 {
                     message.Channel.SendMessageAsync("no.. NO NOOOOOOOOOOOOOOOOOOOOOOOOOOO  *dies*");
+                    StreamWriter sw = new StreamWriter("count.txt", false, Encoding.ASCII);
+                    sw.WriteLine(currentNumber);
+                    sw.WriteLine(countRecord);
+
+                    if (currentNumber == 1)
+                    {
+
+                    }
+                    else
+                    {
+                        sw.Write(msgAuthorOld);
+                    }
+                    sw.Close();
                     System.Threading.Thread.Sleep(3000);
                     stopPiech();
                 }
@@ -442,17 +531,35 @@ namespace Piech_Bot
                     new EmbedFieldBuilder() { IsInline = true, Name = "**ßvizitka**", Value = "Vizitka od Piecha"},
                     new EmbedFieldBuilder() { IsInline = true, Name = "**ßrandomucitel**", Value = "koňozmrdovyhovnazdržky"},
                     new EmbedFieldBuilder() { IsInline = true, Name = "**ßstop**", Value = "*Nemáš na tohle právo takže to ani nezkoušej*"},
+                    new EmbedFieldBuilder() { IsInline = true, Name = "**ßcount**", Value = "Info o #counting"},
                 })
                 .WithFooter("Cyberpiech s.r.o", "https://i.imgur.com/M6GOXYo.png")
                 .Build();
                 message.Channel.SendMessageAsync("", false, embed);
 
             } //                    ßhelp COMMAND
-            // CLASSIFIED
+            else if (command.Equals("messageaspiech"))
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                Console.Write(" ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(message.Channel + " ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(message.Author);
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write(" >> ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(message.Content);
+                Console.ForegroundColor = ConsoleColor.White;
+
+                message.DeleteAsync();
+                message.Channel.SendMessageAsync(message.Content.Substring(15, message.Content.Length - 15));
+            }//           ßmessageaspiech COMMAND
             else if (command.Equals("randomucitel"))
             {
                 Random rndKonicek = new Random();
-                int random_konicek = rndKonicek.Next(1, 66);
+                int random_konicek = rndKonicek.Next(1, 70);
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
@@ -729,8 +836,56 @@ namespace Piech_Bot
                 {
                     message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " my jsme si domluvili rande za kostelem a dali jsme si tam do nosu\n-koníček 2021");
                 }
+                else if (random_konicek == 66)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Jsme jediná planeta na této zemi.\n-Hulvová 2021");
+                }
+                else if (random_konicek == 67)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Lukáši Hrňo. Hrňte to!\n-Jedlička 2021");
+                }
+                else if (random_konicek == 68)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " nebude to písemka bude to test\n-Štěpánová 2021");
+                }
+                else if (random_konicek == 69)
+                {
+                    message.Channel.SendMessageAsync(MentionUtils.MentionUser(message.Author.Id) + " Nechci na vás tlačit, ještě bych vás postříkal\n-Koníček 2021");
+                }
 
-            } //            ßrandomucitel Command
+            } //            ßrandomucitel COMMAND
+            else if (command.Equals("count"))
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                Console.Write(" ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write(message.Channel + " ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(message.Author);
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write(" >> ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(message.Content);
+                Console.ForegroundColor = ConsoleColor.White;
+
+                Color yellow = new Color(255, 255, 0);
+
+                Embed embed = new EmbedBuilder()
+                    .WithColor(yellow)
+                    .WithAuthor("Count")
+                    .WithFields(new EmbedFieldBuilder[]
+                {
+                    // Non-inline fields each get own rows
+                    new EmbedFieldBuilder() { IsInline = false, Name = "*Just count lol*", Value = "-------------"},
+                    new EmbedFieldBuilder() { IsInline = false, Name = "**Next Number**", Value = currentNumber},
+                    new EmbedFieldBuilder() { IsInline = false, Name = "**Count Record**", Value = countRecord},
+                    new EmbedFieldBuilder() { IsInline = false, Name = "**User that counted last**", Value = MentionUtils.MentionUser(msgAuthorOld)},
+                })
+                .WithFooter("Cyberpiech s.r.o", "https://i.imgur.com/M6GOXYo.png")
+                .Build();
+                message.Channel.SendMessageAsync("", false, embed);
+            }//                    ßcount COMMAND
 
             return Task.CompletedTask;
 
